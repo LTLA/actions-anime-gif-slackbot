@@ -64,10 +64,10 @@ template = """{{
             "text": "{description}"
         }},
         "image_url": "{url}",
-        "alt_text": "Ooops! Look like the GIF didn\'t show up. Get your fix at https://myanimelist.net/anime/{show_id}."
+        "alt_text": "{description}"
     }}
   ]
 }}"""
 
-body = template.format(description=gif_info['description'], url=gif_info['url'], show_id=gif_info['show_id'])
+body = template.format(description=gif_info['description'], url=gif_info['url'])
 requests.post(args.webhook, data=body)
