@@ -70,4 +70,4 @@ template = """{{
 }}"""
 
 body = template.format(description=gif_info['description'], url=gif_info['url'], show_id=gif_info['show_id'])
-requests.post(args.url, data=body)
+requests.post(args.webhook, data=body)
