@@ -1,0 +1,20 @@
+name: Anime GIF slackbot
+author: Aaron Lun
+description: Post anime GIFs to Slack via GitHub Actions, because why not?
+inputs:
+  slackWebhook:
+    description: 'URL of the incoming webhook for the Slack app.'
+    required: true
+  sentiment:
+    description: 'Comma-separated string of available sentiments.'
+    required: false
+    default: '*'
+  rating:
+    description: 'Integer specifying the maximum acceptable safe-for-work rating, with 0 being safe and 4 being not safe.'
+    default: 1
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ input.slackWebhook }}
