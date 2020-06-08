@@ -17,4 +17,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ input.slackWebhook }}
+    - ${{ inputs.slackWebhook }}
