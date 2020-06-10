@@ -6,11 +6,11 @@ inputs:
     description: 'URL of the incoming webhook for the Slack app.'
     required: true
   sentiment:
-    description: 'Comma-separated string of available sentiments.'
+    description: 'Comma-separated string of sentiments to use. Defaults to using all available sentiments.'
     required: false
     default: '*'
   rating:
-    description: 'Integer specifying the maximum acceptable safe-for-work rating, with 0 being safe and 4 being not safe.'
+    description: 'Integer specifying the maximum acceptable safe-for-work rating, with 0 being safe and 4 being not safe. Defaults to 1 (i.e., stuff you would show your parents).'
     default: 1
     required: false
 runs:
@@ -18,3 +18,5 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.slackWebhook }}
+    - ${{ inputs.sentiment }}
+    - ${{ inputs.rating }}
