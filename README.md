@@ -12,7 +12,7 @@ This assumes that the webhook URL is saved as a secret in the repository.
 - name: Post anime GIF 
   uses: LTLA/actions-anime-gif-slackbot@master
   with:
-    slackWebhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
+    webhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
 ```
 
 You can control the [sentiments](https://ltla.github.io/acceptable-anime-gifs/sentiment/) of the GIFs
@@ -22,7 +22,7 @@ and the maximum safe-for-work rating (0 being safest, 4 being... less so) with:
 - name: Post celebratory and kide-safe GIF 
   uses: LTLA/actions-anime-gif-slackbot@master
   with:
-    slackWebhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
+    webhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
     sentiment: thumbs_up,celebrate
     rating: 1
 ```
