@@ -19,10 +19,22 @@ You can control the [sentiments](https://ltla.github.io/acceptable-anime-gifs/se
 and the maximum safe-for-work rating (0 being safest, 4 being... less so) with:
 
 ```yaml
-- name: Post celebratory and kide-safe GIF 
+- name: Post celebratory and kid-safe GIF 
   uses: LTLA/actions-anime-gif-slackbot@master
   with:
     webhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
     sentiment: thumbs_up,celebrate
     rating: 1
+```
+
+You can customize the title of the GIF beyond the description of the GIF itself.
+For example, a workflow that runs on a push to `master` might have:
+
+```yaml
+- name: Pushing the master
+  uses: LTLA/actions-anime-gif-slackbot@master
+  with:
+    webhook: ${{ secrets.SLACK_WORK_WEBHOOK }}
+    sentiment: celebrate,love
+    title: ${{ format("Hey, {0}'s master was pushed!", github.repository) }}
 ```
