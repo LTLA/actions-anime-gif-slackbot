@@ -3,11 +3,14 @@
 import argparse
 parser = argparse.ArgumentParser(description='Post anime GIFs to Slack, because why not?')
 parser.add_argument('webhook', type=str, help='URL to an incoming webhook from the Slack API.')
-parser.add_argument('--sentiment', type=str, default='*',
-    help='Comma-separated strings of possible sentiments. Defaults to \'*\' in which case all available sentiments are used.')
+parser.add_argument('--sentiment', type=str, default='',
+    help='Comma-separated strings of possible sentiments. Defaults to an empty string in which case all available sentiments are used.')
 parser.add_argument('--rating', type=int, default=1,
     help='Maximum safe-for-work rating to consider, from 0 (safest) to 4 (not). Defaults to 1.')
 
+parser.add_argument('--title', type=str, default='',
+    help='String containing the plain-text message to use in the title. Defaults to an empty string in which case the GIF description is used.')
+    
 args = parser.parse_args()
 
 ##############################################
@@ -25,7 +28,7 @@ if args.rating < 4: # highest value is 4.
 else:
     by_rating=None
 
-if args.sentiment == '*':
+if not args.sentiment:
     by_sentiment=None
 else:
     sentiments=args.sentiment.split(',')
@@ -54,6 +57,12 @@ chosen = random.choice(choices)
 gif_info = requests.get(host + "entry/" + str(chosen))
 gif_info = gif_info.json()
 
+desc = gif_info['description']
+if not args.title:
+    title = desc
+else:
+    title = args.title
+
 template = """{{
   "text":"Dude, where\'s my GIF?",
   "blocks":[
@@ -61,7 +70,7 @@ template = """{{
         "type": "image",
         "title": {{
             "type": "plain_text",
-            "text": "{description}"
+            "text": "{title}"
         }},
         "image_url": "{url}",
         "alt_text": "{description}"
@@ -69,5 +78,5 @@ template = """{{
   ]
 }}"""
 
-body = template.format(description=gif_info['description'], url=gif_info['url'])
+body = template.format(description=desc, title=title, url=gif_info['url'])
 requests.post(args.webhook, data=body)

@@ -8,11 +8,15 @@ inputs:
   sentiment:
     description: 'Comma-separated string of sentiments to use. Defaults to using all available sentiments.'
     required: false
-    default: '*'
+    default: ''
   rating:
     description: 'Integer specifying the maximum acceptable safe-for-work rating, with 0 being safe and 4 being not safe. Defaults to 1 (i.e., stuff you would show your parents).'
     default: 1
     required: false
+  title:
+    description: 'String containing the title of the posted GIF. Defaults to the GIF description.'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -20,3 +24,4 @@ runs:
     - ${{ inputs.webhook }}
     - ${{ inputs.sentiment }}
     - ${{ inputs.rating }}
+    - ${{ inputs.title }}
